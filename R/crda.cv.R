@@ -27,6 +27,7 @@
 #' @seealso \code{\link{crda.regparam}}, \code{\link{crda}}
 #'
 #' @importFrom caret createFolds
+#' @export
 #' @examples
 #' crda.cv(X,y) when using defaults
 #' crda.cv(X,y, q=1,nFolds=10,centerX=TRUE)

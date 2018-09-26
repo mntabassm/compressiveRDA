@@ -19,6 +19,7 @@
 #'
 #' @seealso \code{\link{crda}}, \code{\link{crda.setup3}}, \code{\link{crda.regparam}}, \code{\link{crda.cv}}
 #'
+#' @export
 #' @examples
 #' crda.classify()
 

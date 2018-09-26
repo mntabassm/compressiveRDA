@@ -8,6 +8,7 @@
 #'
 #' @return X,y, Xt,yt, truepos.
 #' @importFrom mvtnorm rmvnorm
+#' @export
 #' @examples
 #' crda.setup3()
 
