@@ -1,0 +1,15 @@
+Package: compressiveRDA
+Title: Compressive Regularized Discriminant Analysis (CRDA)
+Version: 1.0.0
+Author: Muhammad Naveed Tabassum <muhammad.tabassum@aalto.fi> and Esa Ollila <esa.ollila@aalto.fi>
+Maintainer: Muhammad Naveed Tabassum <muhammad.tabassum@aalto.fi> 
+Description: Compressive Regularized Discriminant Analysis (CRDA) for Simultaneous Feature Selection 
+            and Classi<U+FB01>cation of High-dimensional Data, with Applications to Genomic Studies.
+Depends: R (>= 3.5.1)
+License: GPL-3 + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.0
+Imports: 
+    caret,
+    mvtnorm
