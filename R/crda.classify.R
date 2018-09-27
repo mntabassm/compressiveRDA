@@ -1,19 +1,26 @@
 #' crda.classify
 #'
 #' @title
-#' Classification example by CRDA
+#' Classification Example using Compressive Regularized Discriminant Analysis (CRDA) Method
 #' @aliases crda.classify
 #'
 #' @description
-#' The function \code{crda.cv} performs Classification by CRDA-variants
+#' The function \code{crda.cv} performs classification using CRDA-variants for a partially synthetic dataset.
 #'
-#' @param L Number of training and test splits
-#' @param nK Number of candidates in CV grid for joint-sparsity level
-#' @param q Type of Lq,1 norm
-#' @param prior Type of prior class probabilities
-#' @param centerX Flag for centering the training dataset
-#' @param comparison Flag for comparison with other methods
+#' @param L Number of runs, i.e., training and test splits.
+#' @param nK Number of candidates in 5-fold CV-grid for finding joint-sparsity level.
+#' @param q Type of Lq,1 norm, default is Linf-norm.
+#' @param prior Type of prior class probabilities, either 'uniform' (default) or 'estimated'.
+#' @param centerX Flag for grand-mean centering of test dataset using grand-mean of training dataset.
 #'
+#' @return An object \code{res} of class \code{crda.classify} with the following attributes:
+#' \item{funCall}{The call to the \code{crda.classify} function.}
+#' \item{ACT}{Average computational time (ACT) in seconds over L-runs.}
+#' \item{AveTER}{Average test error rate (TER) over L-runs.}
+#' \item{AveFSR}{Average feature selection rate (FSR) over L-runs.}
+#' \item{AveFPR}{Average false positive rate (FPR) over L-runs.}
+#' \item{AveFNR}{Average false negative rate (FNR) over L-runs.}
+
 #' @author
 #' Muhammad Naveed Tabassum and Esa Ollila, 2018
 #'
@@ -22,16 +29,16 @@
 #' @export
 #' @examples
 #' crda.classify()
+#' crda.classify(L = 1)
+#' crda.classify(L = 1, nK = 5)
+#' crda.classify(L = 1, prior = 'estimated')
+#' crda.classify(L = 1, centerX = TRUE)
+
 
 crda.classify <- function(L = 10, nK = 10, q = Inf,
-                          prior = 'uniform', centerX = FALSE, comparison = FALSE){
+                          prior = 'uniform', centerX = FALSE){
 
-  if (!comparison) {
-    algosList <- c("CRDA(Kub)","CRDA(Kcv)")
-  }else{
-    algosList <- c("CRDA(Kub)","CRDA(Kcv)","logit-ASPLS","SPCALDA","PLDA",
-                   "SCRDA","NSC","DQDA","DLDA","varSelRF","lin-SVM")
-  }
+  algosList <- c("CRDA(Kub)","CRDA(Kcv)")
   CT <- FSR <- TER <- FPR <- FNR <- matrix(NaN, L, length(algosList))
   TERnaive <- rep(NaN, L)
 

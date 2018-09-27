@@ -2,19 +2,19 @@
 % Please edit documentation in R/crda.regparam.R
 \name{crda.regparam}
 \alias{crda.regparam}
-\title{Estimation of regularization parameter.}
+\title{Estimation of Regularization Parameter.}
 \usage{
 crda.regparam(X)
 }
 \arguments{
-\item{X}{Training dataset}
+\item{X}{Training dataset, a pxn matrix with n-samples each having p-features.}
 }
 \value{
 The value of regularization parameter.
 \item{al}{regularization parameter}
 }
 \description{
-The function \code{crda.regparam} estimates the regularization parameter.
+The function \code{crda.regparam} estimates the regularization parameter by a closed-form solution.
 }
 \details{
 crda.regparam

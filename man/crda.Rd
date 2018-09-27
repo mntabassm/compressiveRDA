@@ -2,44 +2,55 @@
 % Please edit documentation in R/crda.R
 \name{crda}
 \alias{crda}
-\title{Classification approach}
+\title{Compressive Regularized Discriminant Analysis (CRDA) Method}
 \usage{
 crda(X, y, q = Inf, al = NULL, K = NULL, Xt = NULL,
   prior = "uniform", centerX = FALSE)
 }
 \arguments{
-\item{X}{Training dataset}
+\item{X}{Training dataset, a pxn matrix with n-samples each having p-features.}
 
-\item{y}{Labels for training dataset}
+\item{y}{Labels for training dataset, an nx1 vector of whole numbers.}
 
 \item{q}{Type of Lq,1 norm, default is Linf-norm.}
 
-\item{al}{regularization parameter}
+\item{al}{Regularization parameter.}
 
-\item{K}{Joint-sparsity parameter}
+\item{K}{Joint-sparsity level.}
 
-\item{Xt}{Test dataset}
+\item{Xt}{Test dataset, a pxnt matrix with nt-samples each of p-features.}
 
-\item{prior}{Type of prior class probabilities}
+\item{prior}{Type of prior class probabilities, either 'uniform' (default) or 'estimated'.}
 
-\item{centerX}{Flag for grand-mean centering of test dataset using grand-mean of training dataset}
+\item{centerX}{Flag for grand-mean centering of test dataset using grand-mean of training dataset.}
 }
 \value{
-An object of class \code{crda} with the following attributes
-\item{funCall}{The call for CRDA}
-\item{prior}{Prior class probabilities on the training dataset \code{X}.}
+An object \code{obj} of class \code{crda} with the following attributes:
+\item{funCall}{The call to the \code{crda} function.}
+\item{prior}{Prior class probabilities.}
+\item{varSelRate}{Feature selection rate (FSR).}
+\item{selVarPos}{Position (i.e., index) of selected features.}
+\item{coefMat}{Coefficient matrix before feature selection.}
+\item{shrunkenCoefMat}{Shrunken (rowsparse) coefficient matrix.}
+\item{const}{The constant part of discriminant function for CRDA method.}
+\item{predTrainLabels}{Predicted labels for training dataset.}
+\item{predTestLabels}{Optional: Predicted labels for test dataset, if it is available.}
+\item{regparam}{Optional: The value of regularization parameter.}
+\item{muX}{Optional: Grand-mean, i.e., row (feature) wise mean of training dataset.}
 }
 \description{
-The function \code{crda} performs
+The function \code{crda} implements Compressive Regularized Discriminant Analysis (CRDA) approach and performs simultaneous feature selection and classification of high-dimensional data.
+CRDA approach aims to address three facets of high-dimensional classification: namely, accuracy, computational complexity, and interpretability.
 }
 \details{
 crda
 }
 \examples{
 crda(X,y)
-crda(X,y, Xt=Xt)
-crda(X,y, q=1,Xt=Xt)
-crda(X,y, q=2,Xt=Xt,centerX=TRUE)
+crda(X,y, Xt = testdata)
+crda(X,y, q = 1, Xt = testdata)
+crda(X,y, q = 2, Xt = Xt, centerX = TRUE)
+crda(X,y, Xt = Xt, prior = 'estimated', centerX = TRUE)
 }
 \seealso{
 \code{\link{crda.regparam}}, \code{\link{crda.cv}}

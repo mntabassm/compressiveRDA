@@ -2,32 +2,43 @@
 % Please edit documentation in R/crda.classify.R
 \name{crda.classify}
 \alias{crda.classify}
-\title{Classification example by CRDA}
+\title{Classification Example using Compressive Regularized Discriminant Analysis (CRDA) Method}
 \usage{
 crda.classify(L = 10, nK = 10, q = Inf, prior = "uniform",
-  centerX = FALSE, comparison = FALSE)
+  centerX = FALSE)
 }
 \arguments{
-\item{L}{Number of training and test splits}
+\item{L}{Number of runs, i.e., training and test splits.}
 
-\item{nK}{Number of candidates in CV grid for joint-sparsity level}
+\item{nK}{Number of candidates in 5-fold CV-grid for finding joint-sparsity level.}
 
-\item{q}{Type of Lq,1 norm}
+\item{q}{Type of Lq,1 norm, default is Linf-norm.}
 
-\item{prior}{Type of prior class probabilities}
+\item{prior}{Type of prior class probabilities, either 'uniform' (default) or 'estimated'.}
 
-\item{centerX}{Flag for centering the training dataset}
-
-\item{comparison}{Flag for comparison with other methods}
+\item{centerX}{Flag for grand-mean centering of test dataset using grand-mean of training dataset.}
+}
+\value{
+An object \code{res} of class \code{crda.classify} with the following attributes:
+\item{funCall}{The call to the \code{crda.classify} function.}
+\item{ACT}{Average computational time (ACT) in seconds over L-runs.}
+\item{AveTER}{Average test error rate (TER) over L-runs.}
+\item{AveFSR}{Average feature selection rate (FSR) over L-runs.}
+\item{AveFPR}{Average false positive rate (FPR) over L-runs.}
+\item{AveFNR}{Average false negative rate (FNR) over L-runs.}
 }
 \description{
-The function \code{crda.cv} performs Classification by CRDA-variants
+The function \code{crda.cv} performs classification using CRDA-variants for a partially synthetic dataset.
 }
 \details{
 crda.classify
 }
 \examples{
 crda.classify()
+crda.classify(L = 1)
+crda.classify(L = 1, nK = 5)
+crda.classify(L = 1, prior = 'estimated')
+crda.classify(L = 1, centerX = TRUE)
 }
 \seealso{
 \code{\link{crda}}, \code{\link{crda.setup3}}, \code{\link{crda.regparam}}, \code{\link{crda.cv}}

@@ -1,13 +1,13 @@
 #' crda.regparam
 #'
 #' @title
-#' Estimation of regularization parameter.
+#' Estimation of Regularization Parameter.
 #' @aliases crda.regparam
 #'
 #' @description
-#' The function \code{crda.regparam} estimates the regularization parameter.
+#' The function \code{crda.regparam} estimates the regularization parameter by a closed-form solution.
 #'
-#' @param X Training dataset
+#' @param X Training dataset, a pxn matrix with n-samples each having p-features.
 #'
 #' @return The value of regularization parameter.
 #' \item{al}{regularization parameter}

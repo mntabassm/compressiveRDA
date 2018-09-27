@@ -1,12 +1,20 @@
 
 #' crda.setup3
 #'
+#' @title
+#' Generation of Partially Synthetic Dataset
 #' @aliases crda.setup3
 #'
 #' @description
-#' This function generates partially synthetic data for setup 3 of the CRDA-paper.
+#' This function generates and splits partially synthetic data into training and test sets for setup 3 of the CRDA-paper.
 #'
-#' @return X,y, Xt,yt, truepos.
+#' @return An object \code{dataset} of class \code{crda.setup3} with the following attributes:
+#' \item{X}{Training dataset, a pxn matrix with n-samples each having p-features.}
+#' \item{y}{Labels for training dataset, an nx1 vector of whole numbers.}
+#' \item{Xt}{Test dataset, a pxnt matrix with nt-samples each having p-features.}
+#' \item{yt}{Labels for test dataset, an ntx1 vector of whole numbers.}
+#' \item{truePos}{True positions of relevant, i.e., differentially expressed features.}
+#'
 #' @importFrom mvtnorm rmvnorm
 #' @export
 #' @examples
@@ -14,8 +22,6 @@
 
 crda.setup3 <- function() {
 
-  # load('khan2001.RData')
-  # data(khan2001)
   ndf <- 100
   truePos <- 1:ndf
   p <- ncol(Xo)-ndf
