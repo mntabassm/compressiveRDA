@@ -22,6 +22,13 @@ The <tt>compressiveRDA</tt> pacakge can be installed from GitHub, using the <tt>
 devtools::install_github("mntabassm/compressiveRDA")
 library(compressiveRDA)
 ```
+
+NOTE: If there is some problem coming then, do as:
+``` r
+devtools::install_github("mntabassm/compressiveRDA", force = TRUE)
+library(compressiveRDA)
+```
+
 <!-- or by the <tt>githubinstall</tt> package that provides a function _githubinstall_. It does not need developer’s name and work as:
 
 ``` r
