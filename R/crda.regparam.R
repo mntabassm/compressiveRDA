@@ -1,7 +1,7 @@
 #' crda.regparam
 #'
 #' @title
-#' Estimation of Regularization Parameter.
+#' Estimation of Regularization Parameter in the Ell2-RSCM estimator of the covariance matrix.
 #' @aliases crda.regparam
 #'
 #' @description
