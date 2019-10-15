@@ -2,25 +2,31 @@
 % Please edit documentation in R/crda.R
 \name{crda}
 \alias{crda}
-\title{Compressive Regularized Discriminant Analysis (CRDA) Method}
+\title{Compressive Regularized Discriminant Analysis (CRDA) approach based CRDA2 method}
 \usage{
-crda(X, y, q = Inf, al = NULL, K = NULL, Xt = NULL,
-  prior = "uniform", centerX = FALSE)
+crda(X, y, Xt = NULL, q = "cv", prior = "uniform", kgrid = NULL,
+  nK = 10, nfolds = 5, centerX = TRUE)
 }
 \arguments{
 \item{X}{Training dataset, a pxn matrix with n-samples each having p-features.}
 
 \item{y}{Labels for training dataset, an nx1 vector of whole numbers.}
 
-\item{q}{Type of Lq,1 norm, default is Linf-norm.}
-
-\item{al}{Regularization parameter.}
-
-\item{K}{Joint-sparsity level.}
-
 \item{Xt}{Test dataset, a pxnt matrix with nt-samples each of p-features.}
 
+\item{q}{scalar (>=1) or string 'var' or 'inf' or 'cv'. If q is a real scalar, then it must be >= 1 and it
+denotes the L_q-norm to be used in the hard thresholding operator H_K(B,phi) in the CRDA method.
+If q is equal to a  string 'inf' (or 'var') then L_infty norm will be used (or sample variance) will be  used
+as the hard-thresholding  selector function. If q is equal to a string 'cv', then CV is used to select the best
+hard-thresholding selector function  among the L_1-, L_2-, L_inf-norm and the sample variance.}
+
 \item{prior}{Type of prior class probabilities, either 'uniform' (default) or 'estimated'.}
+
+\item{kgrid}{Joint-sparsity level.}
+
+\item{nK}{Number of candidate values in the grid of Joint-sparsity level.}
+
+\item{nfolds}{Flag for grand-mean centering of test dataset using grand-mean of training dataset.}
 
 \item{centerX}{Flag for grand-mean centering of test dataset using grand-mean of training dataset.}
 }
@@ -35,11 +41,20 @@ An object \code{obj} of class \code{crda} with the following attributes:
 \item{const}{The constant part of discriminant function for CRDA method.}
 \item{predTrainLabels}{Predicted labels for training dataset.}
 \item{predTestLabels}{Optional: Predicted labels for test dataset, if it is available.}
-\item{regparam}{Optional: The value of regularization parameter.}
 \item{muX}{Optional: Grand-mean, i.e., row (feature) wise mean of training dataset.}
 }
 \description{
-The function \code{crda} implements Compressive Regularized Discriminant Analysis (CRDA) approach and performs simultaneous feature selection and classification of high-dimensional data.
+CRDA approach performs simultaneous feature selection and classification of high-dimensional data.
+The function \code{crda} classifies each column of the test data set Xt (p x N) into one of
+the G classes. Test data set Xt and training data set X must have the
+same number of rows (features or variables). Vector y is a
+class variable of training data. Its unique values define classes; each
+element defines the class to which the corresponding column of X belongs.
+The input y is a numeric vector with integer elements ranging from
+1,2,..,G, where G is the number of classes. Note that y must have the
+same number of rows as there are columns in X. The output yhat indicates
+the class to which each column of Xt has been assigned. Also yhat is Nx1
+vector of integers ranging from 1,2,...,G.
 CRDA approach aims to address three facets of high-dimensional classification: namely, accuracy, computational complexity, and interpretability.
 }
 \details{
@@ -48,13 +63,13 @@ crda
 \examples{
 crda(X,y)
 crda(X,y, Xt = testdata)
-crda(X,y, q = 1, Xt = testdata)
-crda(X,y, q = 2, Xt = Xt, centerX = TRUE)
+crda(X,y, Xt = testdata, q = 1)
+crda(X,y, Xt = Xt, q = 2, centerX = FALSE)
 crda(X,y, Xt = Xt, prior = 'estimated', centerX = TRUE)
 }
 \seealso{
-\code{\link{crda.regparam}}, \code{\link{crda.cv}}
+\code{\link{crda.auxfuns}}, \code{\link{crda.demo}}
 }
 \author{
-Muhammad Naveed Tabassum and Esa Ollila, 2018
+Muhammad Naveed Tabassum and Esa Ollila, 2019.
 }
