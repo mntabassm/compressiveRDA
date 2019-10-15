@@ -13,7 +13,7 @@
 #' \item{TER}{Test error rate (TER) in terms of percentage of misclassifications.}
 #' \item{FSR}{Feature selection rate (FSR) in terms of percentage of features used.}
 #' \item{CT}{Computational time (CT) in seconds.}
-
+#'
 #' @author
 #' Muhammad Naveed Tabassum and Esa Ollila, 2019.
 #'
@@ -35,8 +35,8 @@ crda.demo <- function(prior = 'uniform'){
     ptm <- proc.time()
     obj <- crda(X, y, Xt = Xt, prior = prior, centerX = FALSE)
     CT <- as.numeric((proc.time()-ptm)[3])
-    FSR <- obj$K / p
-    TER <- sum(obj$yhat != yt) / nt	# Test Error Rate
+    FSR <- round(100*obj$K / p, digits = 2) 	# Feature selection rate
+    TER <- round(100*sum(obj$yhat != yt) / nt, digits = 2)	# Test error rate
     res <- list(funCall = match.call(), class = "crda.demo", TER = TER, FSR = FSR, CT = CT )
     return(res)
 }
