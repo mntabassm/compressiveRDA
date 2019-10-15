@@ -27,21 +27,16 @@
 crda.demo <- function(prior = 'uniform'){
 
     cat(sprintf("CRDA's demo (example): classification using a real genomic dataset, Khan'%d. \n", 2001))
-    dataset <- crda.setup3()
-    X  <- dataset$X
-    y  <- dataset$y
-    yt <- dataset$yt
     p <- dim(X)[1]
     n <- dim(X)[2]
     nt <- length(yt)
-    G <- length(unique(y))
 
     ptm <- proc.time()
     obj <- crda(X, y, Xt = Xt, prior = prior, centerX = FALSE)
     CT <- as.numeric((proc.time()-ptm)[3])
     FSR <- obj$K / p
     TER <- sum(obj$yhat != yt) / nt	# Test Error Rate
-
-  res <- list(funCall = match.call(), class = "crda.demo", TER = TER, FSR = FSR, CT = CT )
-  return(res)
+    print(sum(obj$yhat))
+    res <- list(funCall = match.call(), class = "crda.demo", TER = TER, FSR = FSR, CT = CT )
+    return(res)
 }

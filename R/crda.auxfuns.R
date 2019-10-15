@@ -10,6 +10,54 @@
 #'
 #' @seealso \code{\link{crda}}, \code{\link{crda.demo}}
 
+
+# ---------------------------------------------------------
+# CRDA0 is the basic utility function needed by the CRDA function.
+CRDA0 <- function(Xt = NULL, X, y, K = NULL, q = 'inf', prior = table(y)/base::length(y), B = NULL, M = NULL, Ind = NULL){
+
+  obj <- list(funCall = match.call(), class = "CRDA0")
+
+  if (is.null(B)){
+    obj0 <- CRDA_coefmat(X, y)
+    B <- obj0$B
+    M <- obj0$M
+  }
+  obj1 <- hard_threshold(B,K,q,Ind)
+  Best <- obj1$B
+
+  const <- -0.5*diag(t(M) %*% Best) + log(prior)	# 1xG vector of constant in RDA's Disc.Fn
+  dlda <- scale(t(Xt) %*% Best, -const, FALSE)	# Predicted class posterior probabilities for test set
+  obj$yhat <- max.col(dlda)
+  obj$B <- B
+  obj$M <- M
+  obj$K <- obj1$K
+  obj$Ind <- obj1$Ind
+  return(obj)
+}
+
+# ---------------------------------------------------------
+# Hard-thresholding operator H_K(B,q) used in the compressive regularized (linear) discriminant analysis (CRDA).
+hard_threshold <- function(B, K = NULL, q = 'inf', Ind = NULL){
+
+  obj <- list(funCall = match.call(), class = "hard_threshold")
+
+  if (q>=1 && is.numeric(q)) {
+    len <- cbind(apply(abs(B)^q,1,sum)^(1/q))
+  }else{
+    len <- cbind(switch(q, "var" = apply(B,1,var), "inf" = apply(abs(B),1,max)))
+  }
+  if(is.null(K) || missing(K)){
+    K <- base::length(which(len > mean(len)))
+  }
+  Ind <- order(len, decreasing = TRUE)
+  obj$Ind <- Ind
+  B[setdiff(1:dim(len)[1],Ind[1:K]), ] <- 0       # Setting (p-k)-features as zeros to get k-rowsparsity
+  obj$B <- B
+  obj$K <- K
+  return(obj)
+}
+
+
 # ---------------------------------------------------------
 # CRDA_coefmat Computes the CRDA coefficinent matrix B = Sigma^-1 * M
 CRDA_coefmat <- function(X, y, al = NULL, M = NULL){
@@ -91,51 +139,3 @@ crda.regparam <- function(X, centerX = TRUE){
 
   return(alEll2)
 }
-
-# ---------------------------------------------------------
-# CRDA0 is the basic utility function needed by the CRDA function.
-CRDA0 <- function(Xt = NULL, X, y, K = NULL, q = 'inf', prior = table(y)/base::length(y), B = NULL, M = NULL, Ind = NULL){
-
-  obj <- list(funCall = match.call(), class = "CRDA0")
-
-  if (is.null(B)){
-    obj0 <- CRDA_coefmat(X, y)
-    B <- obj0$B
-    M <- obj0$M
-  }
-  obj1 <- hard_threshold(B,K,q,Ind)
-  Best <- obj1$B
-
-  const <- -0.5*diag(t(M) %*% Best) + log(prior)	# 1xG vector of constant in RDA's Disc.Fn
-  dlda <- scale(t(Xt) %*% Best, -const, FALSE)	# Predicted class posterior probabilities for test set
-  obj$yhat <- max.col(dlda)
-  obj$B <- B
-  obj$M <- M
-  obj$K <- obj1$K
-  obj$Ind <- obj1$Ind
-  return(obj)
-}
-
-# ---------------------------------------------------------
-# Hard-thresholding operator H_K(B,q) used in the compressive regularized (linear) discriminant analysis (CRDA).
-hard_threshold <- function(B, K = NULL, q = 'inf', Ind = NULL){
-
-  obj <- list(funCall = match.call(), class = "hard_threshold")
-
-  if (q>=1 && is.numeric(q)) {
-    len <- cbind(apply(abs(B)^q,1,sum)^(1/q))
-  }else{
-    len <- cbind(switch(q, "var" = apply(B,1,var), "inf" = apply(abs(B),1,max)))
-  }
-  if(is.null(K) || missing(K)){
-    K <- base::length(which(len > mean(len)))
-  }
-  Ind <- order(len, decreasing = TRUE)
-  obj$Ind <- Ind
-  B[setdiff(1:dim(len)[1],Ind[1:K]), ] <- 0       # Setting (p-k)-features as zeros to get k-rowsparsity
-  obj$B <- B
-  obj$K <- K
-  return(obj)
-}
-
-

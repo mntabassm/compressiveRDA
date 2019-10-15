@@ -8,7 +8,7 @@ Description: Compressive Regularized Discriminant Analysis (CRDA) for Simultaneo
 Depends: R (>= 3.5.1)
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
-LazyData: no
+LazyData: yes
 RoxygenNote: 6.1.0
 Imports: 
     caret,
