@@ -3,7 +3,7 @@
 \name{CRDA0}
 \alias{CRDA0}
 \alias{crda.auxfuns}
-\title{Auxiliary functions used by the CRDA approach.}
+\title{Auxiliary functions used by the CRDA approach}
 \usage{
 CRDA0(Xt = NULL, X, y, K = NULL, q = "inf",
   prior = table(y)/base::length(y), B = NULL, M = NULL, Ind = NULL)

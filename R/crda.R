@@ -1,7 +1,7 @@
 #' crda
 #'
 #' @title
-#' Compressive Regularized Discriminant Analysis (CRDA) approach based CRDA2 method
+#' Compressive regularized discriminant analysis (CRDA) approach based CRDA2 method
 #' @aliases crda
 #'
 #' @description
@@ -18,30 +18,28 @@
 #' vector of integers ranging from 1,2,...,G.
 #' CRDA approach aims to address three facets of high-dimensional classification: namely, accuracy, computational complexity, and interpretability.
 #'
-#' @param Xt Test dataset, a pxnt matrix with nt-samples each of p-features.
 #' @param X Training dataset, a pxn matrix with n-samples each having p-features.
 #' @param y Labels for training dataset, an nx1 vector of whole numbers.
+#' @param Xt Test dataset, a pxnt matrix with nt-samples each of p-features.
 #' @param q scalar (>=1) or string 'var' or 'inf' or 'cv'. If q is a real scalar, then it must be >= 1 and it
 #' denotes the L_q-norm to be used in the hard thresholding operator H_K(B,phi) in the CRDA method.
 #' If q is equal to a  string 'inf' (or 'var') then L_infty norm will be used (or sample variance) will be  used
 #' as the hard-thresholding  selector function. If q is equal to a string 'cv', then CV is used to select the best
 #' hard-thresholding selector function  among the L_1-, L_2-, L_inf-norm and the sample variance.
 #' @param prior Type of prior class probabilities, either 'uniform' (default) or 'estimated'.
-#' @param kgrid Joint-sparsity level.
-#' @param nK Number of candidate values in the grid of Joint-sparsity level.
-#' @param nfolds Flag for grand-mean centering of test dataset using grand-mean of training dataset.
+#' @param kgrid A grid of candidate values for joint-sparsity level.
+#' @param nK Number of candidate values in the grid of joint-sparsity level.
+#' @param nfolds Number of folds for cross-validation scheme.
 #' @param centerX Flag for grand-mean centering of test dataset using grand-mean of training dataset.
 #'
 #' @return An object \code{obj} of class \code{crda} with the following attributes:
 #' \item{funCall}{The call to the \code{crda} function.}
 #' \item{prior}{Prior class probabilities.}
-#' \item{varSelRate}{Feature selection rate (FSR).}
-#' \item{selVarPos}{Position (i.e., index) of selected features.}
-#' \item{coefMat}{Coefficient matrix before feature selection.}
-#' \item{shrunkenCoefMat}{Shrunken (rowsparse) coefficient matrix.}
-#' \item{const}{The constant part of discriminant function for CRDA method.}
-#' \item{predTrainLabels}{Predicted labels for training dataset.}
-#' \item{predTestLabels}{Optional: Predicted labels for test dataset, if it is available.}
+#' \item{B}{Coefficient matrix before feature selection.}
+#' \item{M}{Group-means matrix.}
+#' \item{Ind}{Indices of the length of the row vectors of B organized in descending order, where the length is determined by optional argument 'q'.}
+#' \item{K}{Joint-sparsity level.}
+#' \item{yhat}{Predicted labels for test dataset}
 #' \item{muX}{Optional: Grand-mean, i.e., row (feature) wise mean of training dataset.}
 #'
 #' @author
@@ -182,9 +180,9 @@ crda <- function(X, y, Xt = NULL, q = 'cv', prior = 'uniform', kgrid = NULL,
   }
   K <- kgrid[idxK0]
   res <- CRDA0(Xt,X,y,K,qvals[[idxq0]],prior,B,M)
-  obj$yhat <- res$yhat
   obj$Ind  <- res$Ind
   obj$K  <- res$K
+  obj$yhat <- res$yhat
 
   return(obj)
 }

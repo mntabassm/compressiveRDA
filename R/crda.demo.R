@@ -1,17 +1,18 @@
 #' crda.demo
 #'
 #' @title
-#' Classification Example (demo) for Compressive Regularized Discriminant Analysis (CRDA) approach using the Ell2-RSCM estimator of the covariance matrix.
+#' A demo (example) on classification of a real genomic dataset
 #' @aliases crda.demo
 #'
 #' @description
-#' The function \code{crda.demo} performs classification using CRDA2 for one split of a real genomic dataset, Khan'2001.
+#' The function \code{crda.demo} performs classification using compressive regularized
+#' discriminant analysis (CRDA) approach for one split of a real genomic dataset, Khan'2001.
 #'
 #' @return An object \code{res} of class \code{crda.demo} with the following attributes:
 #' \item{funCall}{The call to the \code{crda.demo} function.}
-#' \item{TER}{Test error rate (TER)}
-#' \item{FSR}{Feature selection rate (FSR)}
-#' \item{CT}{Average computational time (CT) in seconds.}
+#' \item{TER}{Test error rate (TER) in terms of percentage of misclassifications.}
+#' \item{FSR}{Feature selection rate (FSR) in terms of percentage of features used.}
+#' \item{CT}{Computational time (CT) in seconds.}
 
 #' @author
 #' Muhammad Naveed Tabassum and Esa Ollila, 2019.
@@ -36,7 +37,6 @@ crda.demo <- function(prior = 'uniform'){
     CT <- as.numeric((proc.time()-ptm)[3])
     FSR <- obj$K / p
     TER <- sum(obj$yhat != yt) / nt	# Test Error Rate
-    print(sum(obj$yhat))
     res <- list(funCall = match.call(), class = "crda.demo", TER = TER, FSR = FSR, CT = CT )
     return(res)
 }

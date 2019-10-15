@@ -1,5 +1,5 @@
 # R-package | _compressiveRDA_  
-* __Version__: 1.0.0 
+* __Version__: 1.1 
 * __GitHub Link__: https://github.com/mntabassm/compressiveRDA
 
 * __Title__: Compressive regularized discriminant analysis for simultaneous feature selection and classification of high-dimensional data, with applications to genomic studies. 	 
@@ -8,7 +8,7 @@
 * __Maintainer__: Muhammad Naveed Tabassum
 * __Language__: R
 * __Date__: 26.09.2018
-* __Date (Last update)__: 26.09.2018
+* __Date (Last update)__: 15.10.2019
 
 ## Introduction 
 
@@ -40,10 +40,10 @@ library(compressiveRDA)
 -->
 ## Example
 
-As an example, just run the function 'crda.classify()' that does the classification for setup 3 of the paper.
+As an example, just run the function 'crda.demo()' that does the classification for one split of a real genomic dataset, Khan'2001.
 
 ## basic example code
 
-> * crda.classify() : It does classification using defualt settings (e.g., L=10 training and test splits)
+> * crda.demo() : It does classification using a uniform prior.
 
-> * crda.classify(L=1) : It does classification for one split of data.
+> * crda.demo(prior = 'estimated') : It does classification using a empirically estimated prior.

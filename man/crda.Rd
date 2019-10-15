@@ -2,7 +2,7 @@
 % Please edit documentation in R/crda.R
 \name{crda}
 \alias{crda}
-\title{Compressive Regularized Discriminant Analysis (CRDA) approach based CRDA2 method}
+\title{Compressive regularized discriminant analysis (CRDA) approach based CRDA2 method}
 \usage{
 crda(X, y, Xt = NULL, q = "cv", prior = "uniform", kgrid = NULL,
   nK = 10, nfolds = 5, centerX = TRUE)
@@ -22,11 +22,11 @@ hard-thresholding selector function  among the L_1-, L_2-, L_inf-norm and the sa
 
 \item{prior}{Type of prior class probabilities, either 'uniform' (default) or 'estimated'.}
 
-\item{kgrid}{Joint-sparsity level.}
+\item{kgrid}{A grid of candidate values for joint-sparsity level.}
 
-\item{nK}{Number of candidate values in the grid of Joint-sparsity level.}
+\item{nK}{Number of candidate values in the grid of joint-sparsity level.}
 
-\item{nfolds}{Flag for grand-mean centering of test dataset using grand-mean of training dataset.}
+\item{nfolds}{Number of folds for cross-validation scheme.}
 
 \item{centerX}{Flag for grand-mean centering of test dataset using grand-mean of training dataset.}
 }
@@ -34,13 +34,11 @@ hard-thresholding selector function  among the L_1-, L_2-, L_inf-norm and the sa
 An object \code{obj} of class \code{crda} with the following attributes:
 \item{funCall}{The call to the \code{crda} function.}
 \item{prior}{Prior class probabilities.}
-\item{varSelRate}{Feature selection rate (FSR).}
-\item{selVarPos}{Position (i.e., index) of selected features.}
-\item{coefMat}{Coefficient matrix before feature selection.}
-\item{shrunkenCoefMat}{Shrunken (rowsparse) coefficient matrix.}
-\item{const}{The constant part of discriminant function for CRDA method.}
-\item{predTrainLabels}{Predicted labels for training dataset.}
-\item{predTestLabels}{Optional: Predicted labels for test dataset, if it is available.}
+\item{B}{Coefficient matrix before feature selection.}
+\item{M}{Group-means matrix.}
+\item{Ind}{Indices of the length of the row vectors of B organized in descending order, where the length is determined by optional argument 'q'.}
+\item{K}{Joint-sparsity level.}
+\item{yhat}{Predicted labels for test dataset}
 \item{muX}{Optional: Grand-mean, i.e., row (feature) wise mean of training dataset.}
 }
 \description{

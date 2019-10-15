@@ -2,7 +2,7 @@
 #' crda.auxfuns
 #'
 #' @title
-#' Auxiliary functions used by the CRDA approach.
+#' Auxiliary functions used by the CRDA approach
 #' @aliases crda.auxfuns
 #'
 #' @author
